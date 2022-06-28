@@ -1,0 +1,21 @@
+:root {
+    --text-color: #333;
+    --white: #fff;
+    --black: #000;
+    --primary: #98a7ff;
+    --light-blue: #e9ecff;
+    --grey: #dadada;
+    --header-height: 160px;
+    --buttons-height: calc(100% - var(--header-height));
+}
+
+html {
+    font-size: 62.5%;
+    font-family: sans-serif;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}

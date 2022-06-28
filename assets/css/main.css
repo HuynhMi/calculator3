@@ -1,0 +1,180 @@
+.calculator-app {
+    min-height: 100vh;
+    background-color: var(--white);
+    display: flex;
+}
+
+.calculator-main {
+    background-color: var(--light-blue);
+    border: 1px solid var(--grey);
+    width: 100%;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.calculator__header {
+    padding: 10px 15px 0px;
+    height: var(--header-height);
+}
+
+.row {
+    justify-content: space-between;
+}
+.calculator__logo, .row {
+    display: flex;
+    align-items: flex-end;
+}
+
+.calculator__logo img {
+    height: 25px;
+}
+
+.calculator__logo span {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-left: 10px;
+    color: var(--text-color);
+}
+
+span.calculator__history-btn {
+    font-size: 2.8rem;
+    cursor: pointer;
+    color: var(--text-color);
+}
+.calculator__display-part {
+    min-height: 120px;
+    background-color: transparent;
+    padding: 15px 0px;
+}
+
+.calculator__display-part span  {
+    display: block;
+}
+
+.display_expression {
+    font-size: 2rem;
+    text-align: right;
+    color: #808080;
+    margin-bottom: 10px;
+}
+
+.display_result {
+    font-size: 3rem;
+    color: #808080;
+}
+
+.display_operand {
+    font-size: 3.4rem;
+    font-weight: 600;
+}
+
+.calculator__buttons {
+    padding: 0 10px 10px;
+    height: var(--buttons-height);
+}
+
+.calculator__buttons table {
+    width: 100%;
+    border-spacing: 5px;
+    height: 100%;
+}
+
+.calculator__buttons td {
+    text-align: center;
+    font-size: 2.6rem;
+    color: var(--text-color);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 10px 0px;
+    cursor: pointer;
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.08);
+}
+
+
+/* HISTORY */
+.calculator__history-overlay {
+    position: absolute;
+    bottom: 0;
+    height: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: height linear 200ms;
+    overflow: hidden;
+}
+
+.calculator__history-overlay.show-history {
+    height: 100%;
+}
+
+.history__wrapper {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--white);
+    padding: 15px 10px;
+}
+
+.row.align-center {
+    align-items: center; 
+}
+
+.history__btn {
+    font-size: 2.4rem;
+    cursor: pointer;
+    padding: 3px 3px;
+}
+
+.history__btn:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 4px;
+}
+
+.history__title {
+    font-size: 1.8rem;
+    margin-left: 5px;
+}
+
+.history__list {
+    list-style: none;
+    margin-top: 5px;
+    max-height: 40vh;
+    overflow: auto;
+    
+}
+
+.history__item {
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.history__item:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.history__item span {
+    font-size: 1.6rem;
+}
+
+span.history__delete-btn {
+    color: rgb(247, 107, 107);
+    cursor: pointer;
+    display: none;
+}
+span.history__delete-btn.show {
+    display: block;
+}
+
+@media (min-width: 510px) {
+    .calculator-main {
+        margin: auto;
+        min-height: 100px;
+        max-width: 400px;
+        border-radius: 10px;
+    }
+
+    .calculator__buttons {
+        /* padding: 0 5px 5px; */
+    }
+}
