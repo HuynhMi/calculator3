@@ -153,8 +153,12 @@ span.calculator__history-btn {
     background-color: rgba(0, 0, 0, 0.02);
 }
 
-.history__item span {
+.history__item-expression {
     font-size: 1.6rem;
+}
+.history__item-timer {
+    font-size: 1.4rem;
+    color: #ccc;
 }
 
 span.history__delete-btn {
@@ -165,6 +169,7 @@ span.history__delete-btn {
 span.history__delete-btn.show {
     display: block;
 }
+
 
 @media (min-width: 510px) {
     .calculator-main {
