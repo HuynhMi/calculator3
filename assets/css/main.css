@@ -51,6 +51,7 @@ span.calculator__history-btn {
 
 .calculator__display-part span  {
     display: block;
+    min-height: 23px;
 }
 
 .display_expression {
@@ -67,6 +68,9 @@ span.calculator__history-btn {
 
 .display_operand {
     font-size: 3.4rem;
+}
+
+.display_operand.show {
     font-weight: 600;
 }
 
