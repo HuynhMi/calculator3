@@ -29,7 +29,12 @@ const appCalculator = {
         digitBtns.forEach(function (digit) {
             // CÓ 2 THỜI ĐIỂM NHẬP DIGIT KHỞI TẠO OPERAND CẦN SETUP
             digit.onclick = function(e) {
-                
+                //xử lý operand sau khi equal to, và bấm dấu ".""
+                //(1)sau khi kết thúc một phép tính bằng dấu bằng: setup lại 1 số variable
+                if (_this.isEqual) {
+                    _this.operand = '';
+                }
+
                 //(2) nhập bình thường
                 /* KIỂM TRA KHI NHẬP DIGIT TẠO OPERAND
                     1. 1 số 0 nếu 0.000
@@ -39,7 +44,7 @@ const appCalculator = {
                 if (value === '0' && !_this.operand) {
                     _this.hasDot = false;
                     _this.enableDigitInput = false;
-                } else if (value === '0' && !_this.enableDigitInput) {
+                } else if (value === '0' && !_this.enableDigitInput ) {
                     return;
                 }
 
@@ -50,10 +55,7 @@ const appCalculator = {
                     return;
                 }
 
-                //xử lý operand sau khi equal to, và bấm dấu ".""
-                //(1)sau khi kết thúc một phép tính bằng dấu bằng: setup lại 1 số variable
                 if (_this.isEqual) {
-                    _this.resetOperand();
                     _this.resetExpression();
                     _this.isEqual = false;
                 }
@@ -103,13 +105,19 @@ const appCalculator = {
             deleteNumberBtn.onclick = function() {
                 _this.operand = '';
                 operandElement.innerText = '0';
+                operandElement.classList.remove('show');
             }
 
             deleteDigitBtn.onclick = function() {
                 if (_this.operand) {
                     const lent = _this.operand.length;
                     _this.operand = _this.operand.slice(0, lent - 1);
-                    operandElement.innerText = _this.operand ? _this.operand : '0';
+                    if (_this.operand) {
+                        operandElement.innerText = _this.operand;
+                    } else {
+                        operandElement.innerText = '0';
+                        operandElement.classList.remove('show');
+                    }
                 } 
             }
 
@@ -154,12 +162,6 @@ const appCalculator = {
         }
         expressionElement.innerText = this.expression.trim();
     },
-    cleanAll: function() {
-        this.resetOperand();
-        this.resetExpression();
-        this.resetResult();
-
-    },
     clean: function() {
         _this.operand = '';
         operandElement.innerText = '0';
@@ -169,7 +171,6 @@ const appCalculator = {
         _this.expression = '';
         expressionElement.innerText = '0';
         _this.lastOperator = null;
-
         
     },
     calculate: function () {
