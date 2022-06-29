@@ -12,9 +12,9 @@ const deleteDigitBtn = $('.delete-digit');
 const equalBtn = $('.equals');
 const changeSingBtn = $('.change-sign');
 
-const expressionElement = $('.display_expression');
-const operandElement = $('.display_operand');
-const tempotaryResultElement = $('.display_result');
+const expressionElement = $('.display__expression');
+const operandElement = $('.display__operand');
+const tempotaryResultElement = $('.display__result');
 
 const appCalculator = {
     operand: '',

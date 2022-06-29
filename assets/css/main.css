@@ -42,7 +42,9 @@ span.calculator__history-btn {
     font-size: 2.8rem;
     cursor: pointer;
     color: var(--text-color);
+    padding: 5px;
 }
+
 .calculator__display-part {
     min-height: 120px;
     background-color: transparent;
@@ -51,22 +53,25 @@ span.calculator__history-btn {
 
 .calculator__display-part span  {
     display: block;
-    min-height: 23px;
 }
 
-.display_expression {
+.display__expression {
     font-size: 2rem;
     text-align: right;
     color: #808080;
-    margin-bottom: 10px;
+    min-height: 30px;
 }
 
-.display_result {
+.calculator__display-part div {
+    min-height: 45px;
+}
+
+.display__result {
     font-size: 3rem;
     color: #808080;
 }
 
-.display_operand {
+.display__operand {
     font-size: 3.4rem;
 }
 
@@ -160,11 +165,11 @@ td:hover {
 
 .history__item {
     padding: 10px 15px;
-    border-radius: 5px;
 }
 
-.history__item:hover {
+.history__item:hover, span.calculator__history-btn:hover {
     background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 5px;
 }
 
 .history__item-expression {
