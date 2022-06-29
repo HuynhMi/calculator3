@@ -203,3 +203,9 @@ span.history__delete-btn.show {
         /* padding: 0 5px 5px; */
     }
 }
+
+@media (max-width: 510px) {
+    html {
+        font-size: 70%;
+    }
+}
