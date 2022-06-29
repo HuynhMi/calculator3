@@ -21,73 +21,83 @@ const appCalculator = {
     tempResult: '',
     expression: '',
     hasDot: false,
-    canAddDigit: true,
+    enableDigitInput: true,
     lastOperator: null,
     isEqual: false,
     handleEvents: function() {
         _this = this;
         digitBtns.forEach(function (digit) {
+            // CÓ 2 THỜI ĐIỂM NHẬP DIGIT KHỞI TẠO OPERAND CẦN SETUP
             digit.onclick = function(e) {
+                
+                //(2) nhập bình thường
+                /* KIỂM TRA KHI NHẬP DIGIT TẠO OPERAND
+                    1. 1 số 0 nếu 0.000
+                    2. chỉ cho nhập 1 dot
+                */
+                const value = e.target.innerText;
+                if (value === '0' && !_this.operand) {
+                    _this.hasDot = false;
+                    _this.enableDigitInput = false;
+                } else if (value === '0' && !_this.enableDigitInput) {
+                    return;
+                }
+
+                if(value === '.' && _this.operand && !_this.hasDot) {
+                    _this.hasDot = true;
+                    _this.enableDigitInput = true;
+                } else if ((value === '.' && !_this.operand) || (value === '.' && _this.hasDot)) {
+                    return;
+                }
+
+                //xử lý operand sau khi equal to, và bấm dấu ".""
+                //(1)sau khi kết thúc một phép tính bằng dấu bằng: setup lại 1 số variable
                 if (_this.isEqual) {
-                    _this.cleanAll();
+                    _this.resetOperand();
+                    _this.resetExpression();
                     _this.isEqual = false;
                 }
-
-                const txt = e.target.innerText;
-
-                //check dot and check digit-0
-                console.log(_this.canAddDigit);
-                if ( txt === '.' && !_this.hasDot ) {
-                    _this.canAddDigit = true;
-                    _this.hasDot = true;
-                } else if ((txt === '.' && _this.hasDot) || (txt=== '.' &&  !_this.operand) || !_this.canAddDigit) {
-                   return;
-                }
-
-                if (txt === '0' && _this.canAddDigit && !_this.operand) {
-                    _this.canAddDigit = false;
-                    _this.hasDot = false;
-                } 
-
-                _this.resetOperand(txt);
+                _this.resetOperand(value);
             }
 
             operatorBtns.forEach(function (operator) {
                 operator.onclick = function(e) {
+                    //CHECK NẾU OPERAND KHÔNG CÓ GIÁ TRỊ THÌ KO ADD OPERATOR
+                    if (!_this.operand) return;
+                    
+                    // CÓ 3 THỜI ĐIỂM CẦN SETUP KHI ENTER OPERATOR
+                    // (1): sau khi bằng 1 kết quả
                     if(_this.isEqual) {
-                        _this.expression = '';
                         _this.resetExpression();
                         _this.isEqual = false;
                     }
 
-                    if (_this.operand) {
-                        if (_this.lastOperator) {
-                            _this.calculate();
-                        } else {
-                            _this.tempResult = _this.operand;
-                        }
-                        const currentOperator = e.target.innerText;
-                        _this.resetResult(_this.tempResult);
-                        _this.resetExpression(`${_this.operand} ${currentOperator}`);
-                        _this.resetOperand();
-                        _this.lastOperator = currentOperator;
+                    //(2), (3): tính toán nếu đã có lastOperator or không
+                    if (_this.lastOperator) {
+                        _this.calculate();
+                    } else {
+                        _this.tempResult = _this.operand;
                     }
-                    
-                    
+
+                    const currentOperator = e.target.innerText;
+                    _this.resetResult(_this.tempResult);
+                    _this.resetExpression(`${_this.operand} ${currentOperator}`);
+                    _this.resetOperand();
+                    _this.lastOperator = currentOperator;
                 }
             })
 
             equalBtn.onclick = function() {
-                if (_this.lastOperator && _this.operand && _this.tempResult) {
+                if(_this.operand && _this.tempResult && _this.lastOperator) {
                     _this.calculate();
                     _this.resetExpression(`${_this.operand} =`);
                     _this.resetOperand();
                     _this.resetOperand(_this.tempResult);
-                    _this.tempResult = '';
                     _this.resetResult();
                     _this.lastOperator = null;
                     _this.isEqual = true;
                 }
+                
             }
 
             deleteNumberBtn.onclick = function() {
@@ -104,11 +114,7 @@ const appCalculator = {
             }
 
             cleanAllBtn.onclick = function() {
-                _this.operand = '';
-                operandElement.innerText = '0';
-                _this.resetResult();
-                _this.resetExpression();
-                _this.lastOperator = null;
+                _this.clean();
             }
 
             percentBtn.onclick = function() {
@@ -124,7 +130,7 @@ const appCalculator = {
             
         })
     },
-    resetOperand: function(txt='') {
+    resetOperand: function(txt = '') {
         if (txt) {
             this.operand += txt;
         } else {
@@ -154,6 +160,18 @@ const appCalculator = {
         this.resetResult();
 
     },
+    clean: function() {
+        _this.operand = '';
+        operandElement.innerText = '0';
+        operandElement.classList.remove('show');
+        _this.tempResult = '';
+        tempotaryResultElement.innerText = '0';
+        _this.expression = '';
+        expressionElement.innerText = '0';
+        _this.lastOperator = null;
+
+        
+    },
     calculate: function () {
         if (this.tempResult && this.operand) {
             switch(this.lastOperator) {
@@ -170,11 +188,12 @@ const appCalculator = {
                     this.tempResult = parseFloat(this.tempResult) / parseFloat(this.operand);
                     break;
             }
+            this.tempResult = parseFloat(this.tempResult.toPrecision(16)).toString();
         }
-        this.tempResult = this.tempResult.toString();
+        
     },
     start: function() {
-
+        
         this.handleEvents();
     }
 }
