@@ -21,7 +21,6 @@ const appCalculator = {
     tempResult: '',
     expression: '',
     hasDot: false,
-    enableDigit: true,
     hasZero: false,
     lastOperator: null,
     isEqual: false,
