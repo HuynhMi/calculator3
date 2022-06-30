@@ -168,8 +168,14 @@ const appCalculator = {
             }
 
             historyListElement.onclick = function(e) {
-                if (e.target.closest) {
-                    console.log(e.target);
+                const element = e.target.closest('.history__item');
+                if (element) {
+                    const id = element.dataset.id;
+                    const item = _this.calculateList[id];
+                    _this.resetExpression();
+                    expressionElement.innerHTML = item.expression;
+                    _this.operand = item.result;
+                    operandElement.innerHTML = item.result;
                 }
             }
         })
