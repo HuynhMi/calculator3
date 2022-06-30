@@ -166,6 +166,12 @@ const appCalculator = {
                 _this.showCalculatorList();
                 
             }
+
+            historyListElement.onclick = function(e) {
+                if (e.target.closest) {
+                    console.log(e.target);
+                }
+            }
         })
     },
     getCalculateItem: function() {
@@ -183,9 +189,9 @@ const appCalculator = {
         if  (this.calculateList.length === 0) {
             htmls = '<li class="row history__item"><span class="history__text">There is no history yet</span></li>';
         } else {
-            htmls = this.calculateList.map(function(item) {
+            htmls = this.calculateList.map(function(item, index) {
                 return `
-                    <li class="history__item">
+                    <li class="history__item" data-id="${index}">
                         <span class="history__item-expression">${item.expression} ${item.result}</span>
                     </li>
                 `;
