@@ -216,8 +216,9 @@ span.history__delete-btn.show {
 }
 
 @media (max-width: 510px) {
-    html {
-        font-size: 55%;
+    .calculator__header {
+        padding-left: 25px;
+        padding-right: 25px;
     }
 
     .display__expression {
@@ -229,7 +230,7 @@ span.history__delete-btn.show {
     }
 
     .display__result {
-        font-size: 4.5rem;
+        font-size: 5rem;
     }
 
     .calculator__buttons table {
