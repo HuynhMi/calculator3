@@ -181,6 +181,79 @@ const appCalculator = {
                     _this.lastOperator = null;
                 }
             }
+
+            // handle when clicks on the keyboard
+            window.onkeyup = function(e) {
+                //numbers, delete => ce,backspace => delete digit, =  or enter
+                const key = e.key;
+                if (key == '.'||
+                    key == '1'||
+                    key == '2'||
+                    key == '3'||
+                    key == '4'||
+                    key == '5'||
+                    key == '6'||
+                    key == '7'||
+                    key == '8'||
+                    key == '9'||
+                    key == '0'
+                    ) {
+                        digitBtns.forEach(function(btn) {
+                            if (btn.innerText === key) {
+                                btn.click();
+                            }
+                        })
+                    } else if (key === 'Delete') {
+                        deleteNumberBtn.click()
+                    } else if (key === 'Backspace') {
+                        deleteDigitBtn.click();
+                    } else if (key === '=' || key === 'Enter') {
+                        equalBtn.click();
+                    } else if (
+                        key === '+'||
+                        key === '-'||
+                        key === '*'||
+                        key === '/'
+                    ) {
+                        let btnClick;
+                        switch(key) {
+                            case '+':
+                                btnClick = Array.from(operatorBtns).filter(function(btn) {
+                                    return btn.innerText === '+';
+
+                                });
+                                btnClick[0].click();
+                                break;
+                            case '-':
+                                btnClick = Array.from(operatorBtns).filter(function(btn) {
+                                    return btn.innerText === '−';
+
+                                });
+                                btnClick[0].click();
+                                break;
+                            case '*':
+                                btnClick = Array.from(operatorBtns).filter(function(btn) {
+                                    return btn.innerText === '×';
+
+                                });
+                                btnClick[0].click();
+                                break;
+                            case '/':
+                                btnClick = Array.from(operatorBtns).filter(function(btn) {
+                                    return btn.innerText === '÷';
+
+                                });
+                                btnClick[0].click();
+                                break;
+                        }
+                    } else if (key === 'H') {
+                        historyOpenBtn.click();
+                    } else if (key === 'C') {
+                        historyCloseBtn.click();
+                    } else if (key === 'D') {
+                        historyDeleteBtn.click();
+                    }
+            }
         })
     },
     getCalculateItem: function() {
