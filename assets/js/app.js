@@ -21,6 +21,7 @@ const historyCloseBtn = $('.history__btn--close');
 const historyWrapper = $('.calculator__history-overlay');
 const historyListElement = $('.history__list');
 const historyDeleteBtn = $('.history__btn--delete');
+const KEYS = 'KEY_CALCULATOR';
 
 const appCalculator = {
     operand: '',
@@ -30,7 +31,7 @@ const appCalculator = {
     hasZero: false,
     lastOperator: null,
     isEqual: false,
-    calculateList: [],
+    calculateList: JSON.parse(localStorage.getItem(KEYS)) || [],
     handleEvents: function() {
         _this = this;
         digitBtns.forEach(function (digit) {
@@ -161,7 +162,9 @@ const appCalculator = {
 
             historyDeleteBtn.onclick = function() {
                 _this.calculateList = [];
+                _this.removeDataFromLocalStorage();
                 _this.showCalculatorList();
+                
             }
         })
     },
@@ -169,10 +172,10 @@ const appCalculator = {
         if (this.expression && this.operand) {
             const newCalculate = {
                 expression: this.expression,
-                result: this.operand,
-                time: this.getTimer()
+                result: this.operand
             };
             this.calculateList.push(newCalculate);
+            this.setDataToLocalStorage();
         }
     },
     showCalculatorList: function() {
@@ -182,9 +185,8 @@ const appCalculator = {
         } else {
             htmls = this.calculateList.map(function(item) {
                 return `
-                    <li class="row history__item">
+                    <li class="history__item">
                         <span class="history__item-expression">${item.expression} ${item.result}</span>
-                        <span class="history__item-timer">${item.time}</span>
                     </li>
                 `;
             });
@@ -192,6 +194,12 @@ const appCalculator = {
         }
         historyListElement.innerHTML = htmls;
 
+    },
+    setDataToLocalStorage: function() {
+        localStorage.setItem(KEYS, JSON.stringify(this.calculateList));
+    },
+    removeDataFromLocalStorage: function() {
+        localStorage.removeItem(KEYS);
     },
     resetOperand: function(txt = '') {
         if (txt) {
@@ -269,14 +277,6 @@ const appCalculator = {
             this.tempResult = parseFloat(this.tempResult.toPrecision(12)).toString();
         }
         
-    },
-    getTimer: function() {
-        const date = new Date();
-        let hours = date.getHours();
-        hours = hours < 10 ? '0' + hours : hours;
-        let minutes = date.getMinutes();
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        return hours + ':' + minutes;
     },
     start: function() {
         this.showCalculatorList();
