@@ -93,11 +93,7 @@ const appCalculator = {
 
                     const currentOperator = e.target.innerText;
                     _this.resetResult(_this.tempResult);
-                    if (_this.operand < 0) {
-                        _this.resetExpression(`(${_this.operand}) ${currentOperator}`);
-                    } else {
-                        _this.resetExpression(`${_this.operand} ${currentOperator}`);
-                    }
+                    _this.resetExpression(_this.operand, currentOperator);
                     _this.resetOperand();
                     _this.lastOperator = currentOperator;
                 }
@@ -106,11 +102,7 @@ const appCalculator = {
             equalBtn.onclick = function() {
                 if(_this.operand && _this.tempResult && _this.lastOperator) {
                     _this.calculate();
-                    if (_this.operand < 0) {
-                        _this.resetExpression(`(${_this.operand}) =`);
-                    } else {
-                        _this.resetExpression(`${_this.operand} =`);
-                    }
+                    _this.resetExpression(_this.operand, '=');
                     _this.resetOperand();
                     _this.resetOperand(_this.tempResult);
                     _this.resetResult();
@@ -198,10 +190,14 @@ const appCalculator = {
             tempotaryResultElement.innerText = value;
         }
     },
-    resetExpression: function(txt = '') {
-        if (txt) {
-            this.expression += ' ' + txt;
-        } else {
+    resetExpression: function(operand = '', operator = '') {
+        if (operand) {
+            if (operand >= 0) {
+                this.expression += `${operand} ${operator}`;
+            } else {
+                this.expression += `(${operand}) ${operator}`;
+            }
+        } else if(!operand) {
             this.expression = '';
         }
         expressionElement.innerText = this.expression.trim();

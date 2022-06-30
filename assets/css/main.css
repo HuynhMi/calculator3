@@ -213,6 +213,29 @@ span.history__delete-btn.show {
 
 @media (max-width: 510px) {
     html {
-        font-size: 70%;
+        font-size: 55%;
+    }
+
+    .display__expression {
+        font-size: 4.5rem;
+    }
+
+    .display__operand {
+        font-size: 6rem;
+    }
+
+    .display__result {
+        font-size: 4.5rem;
+    }
+
+    .calculator__buttons table {
+        border-spacing: 15px;
+    }
+    .calculator__buttons td {
+        padding: unset;
+        border-radius: 20px;
+    }
+    :root {
+        --header-height: 220px;
     }
 }
