@@ -93,7 +93,11 @@ const appCalculator = {
 
                     const currentOperator = e.target.innerText;
                     _this.resetResult(_this.tempResult);
-                    _this.resetExpression(`${_this.operand} ${currentOperator}`);
+                    if (_this.operand < 0) {
+                        _this.resetExpression(`(${_this.operand}) ${currentOperator}`);
+                    } else {
+                        _this.resetExpression(`${_this.operand} ${currentOperator}`);
+                    }
                     _this.resetOperand();
                     _this.lastOperator = currentOperator;
                 }
@@ -102,7 +106,11 @@ const appCalculator = {
             equalBtn.onclick = function() {
                 if(_this.operand && _this.tempResult && _this.lastOperator) {
                     _this.calculate();
-                    _this.resetExpression(`${_this.operand} =`);
+                    if (_this.operand < 0) {
+                        _this.resetExpression(`(${_this.operand}) =`);
+                    } else {
+                        _this.resetExpression(`${_this.operand} =`);
+                    }
                     _this.resetOperand();
                     _this.resetOperand(_this.tempResult);
                     _this.resetResult();
@@ -141,8 +149,10 @@ const appCalculator = {
             }
 
             changeSingBtn.onclick = function() {
+                console.log(_this.operand);
                 _this.operand *= (-1);
-                operandElement.innerText = _this.operand;
+                _this.displayOperand(_this.operand);
+                console.log(_this.operand);
             }
 
             historyOpenBtn.onclick = function() {
@@ -162,15 +172,31 @@ const appCalculator = {
             this.hasDot = false;
             this.hasZero = false;
         }
-        operandElement.innerText = this.operand;
+
+        if (this.operand < 0) {
+            operandElement.innerText = `(${this.operand})`;
+        } else {
+            operandElement.innerText = this.operand;
+        }
         if (this.operand) {
             operandElement.classList.add('show');
         } else {
             operandElement.classList.remove('show');
         }
     },
+    displayOperand: function(operand) {
+        if(operand < 0) {
+            operandElement.innerText = '('+operand+')';
+        } else {
+            operandElement.innerText = operand;
+        }
+    },
     resetResult: function(value = '') {
-        tempotaryResultElement.innerText = value;
+        if (value < 0) {
+            tempotaryResultElement.innerText = `(${value})`;
+        } else {
+            tempotaryResultElement.innerText = value;
+        }
     },
     resetExpression: function(txt = '') {
         if (txt) {
@@ -212,7 +238,6 @@ const appCalculator = {
         
     },
     start: function() {
-        
         this.handleEvents();
     }
 }
