@@ -120,7 +120,7 @@ td:hover {
     height: 100%;
     width: 100%;
     opacity: 0;
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.15);
     transition: all linear 200ms;
     overflow: hidden;
     visibility: hidden;
@@ -166,9 +166,13 @@ td:hover {
 .history__list {
     list-style: none;
     margin-top: 5px;
-    max-height: 40vh;
+    height: 40vh;
     overflow: auto;
     
+}
+
+.history__text {
+    font-size: 1.6rem;
 }
 
 .history__item {

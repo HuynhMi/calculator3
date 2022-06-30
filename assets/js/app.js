@@ -19,7 +19,8 @@ const tempotaryResultElement = $('.display__result');
 const historyOpenBtn = $('.calculator__history-btn');
 const historyCloseBtn = $('.history__btn--close');
 const historyWrapper = $('.calculator__history-overlay');
-
+const historyListElement = $('.history__list');
+const historyDeleteBtn = $('.history__btn--delete');
 
 const appCalculator = {
     operand: '',
@@ -29,6 +30,7 @@ const appCalculator = {
     hasZero: false,
     lastOperator: null,
     isEqual: false,
+    calculateList: [],
     handleEvents: function() {
         _this = this;
         digitBtns.forEach(function (digit) {
@@ -108,6 +110,8 @@ const appCalculator = {
                     _this.resetResult();
                     _this.lastOperator = null;
                     _this.isEqual = true;
+                    _this.getCalculateItem();
+                    _this.showCalculatorList();
                 }
                 
             }
@@ -154,7 +158,40 @@ const appCalculator = {
             historyCloseBtn.onclick = function() {
                 historyWrapper.classList.remove('show-history')
             }
+
+            historyDeleteBtn.onclick = function() {
+                _this.calculateList = [];
+                _this.showCalculatorList();
+            }
         })
+    },
+    getCalculateItem: function() {
+        if (this.expression && this.operand) {
+            const newCalculate = {
+                expression: this.expression,
+                result: this.operand,
+                time: this.getTimer()
+            };
+            this.calculateList.push(newCalculate);
+        }
+    },
+    showCalculatorList: function() {
+        let htmls;
+        if  (this.calculateList.length === 0) {
+            htmls = '<li class="row history__item"><span class="history__text">There is no history yet</span></li>';
+        } else {
+            htmls = this.calculateList.map(function(item) {
+                return `
+                    <li class="row history__item">
+                        <span class="history__item-expression">${item.expression} ${item.result}</span>
+                        <span class="history__item-timer">${item.time}</span>
+                    </li>
+                `;
+            });
+            htmls = htmls.join('\n')
+        }
+        historyListElement.innerHTML = htmls;
+
     },
     resetOperand: function(txt = '') {
         if (txt) {
@@ -193,7 +230,7 @@ const appCalculator = {
     resetExpression: function(operand = '', operator = '') {
         if (operand) {
             if (operand >= 0) {
-                this.expression += `${operand} ${operator}`;
+                this.expression += `${operand} ${operator} `;
             } else {
                 this.expression += `(${operand}) ${operator}`;
             }
@@ -233,7 +270,16 @@ const appCalculator = {
         }
         
     },
+    getTimer: function() {
+        const date = new Date();
+        let hours = date.getHours();
+        hours = hours < 10 ? '0' + hours : hours;
+        let minutes = date.getMinutes();
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        return hours + ':' + minutes;
+    },
     start: function() {
+        this.showCalculatorList();
         this.handleEvents();
     }
 }
