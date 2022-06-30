@@ -176,6 +176,9 @@ const appCalculator = {
                     expressionElement.innerHTML = item.expression;
                     _this.operand = item.result;
                     operandElement.innerHTML = item.result;
+                    _this.resetResult();
+                    _this.isEqual = true;
+                    _this.lastOperator = null;
                 }
             }
         })
