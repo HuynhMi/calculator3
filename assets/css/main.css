@@ -234,13 +234,13 @@ span.history__delete-btn.show {
     }
 
     .calculator__buttons table {
-        border-spacing: 12px;
+        border-spacing: 15px;
     }
     .calculator__buttons td {
         padding: unset;
         border-radius: 20px;
     }
     :root {
-        --header-height: 220px;
+        --header-height: 200px;
     }
 }
