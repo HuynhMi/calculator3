@@ -117,15 +117,18 @@ td:hover {
 .calculator__history-overlay {
     position: absolute;
     bottom: 0;
-    height: 0;
+    height: 100%;
     width: 100%;
+    opacity: 0;
     background-color: rgba(0, 0, 0, 0.05);
-    transition: height linear 200ms;
+    transition: all linear 200ms;
     overflow: hidden;
+    visibility: hidden;
 }
 
 .calculator__history-overlay.show-history {
-    height: 100%;
+    opacity: 1;
+    visibility: visible;
 }
 
 .history__wrapper {
@@ -144,6 +147,10 @@ td:hover {
     font-size: 2.4rem;
     cursor: pointer;
     padding: 3px 3px;
+}
+
+.history__btn--delete {
+    color: rgb(228, 91, 91);
 }
 
 .history__btn:hover {

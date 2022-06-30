@@ -16,6 +16,11 @@ const expressionElement = $('.display__expression');
 const operandElement = $('.display__operand');
 const tempotaryResultElement = $('.display__result');
 
+const historyOpenBtn = $('.calculator__history-btn');
+const historyCloseBtn = $('.history__btn--close');
+const historyWrapper = $('.calculator__history-overlay');
+
+
 const appCalculator = {
     operand: '',
     tempResult: '',
@@ -140,7 +145,13 @@ const appCalculator = {
                 operandElement.innerText = _this.operand;
             }
 
+            historyOpenBtn.onclick = function() {
+                historyWrapper.classList.add('show-history');
+            }
             
+            historyCloseBtn.onclick = function() {
+                historyWrapper.classList.remove('show-history')
+            }
         })
     },
     resetOperand: function(txt = '') {
