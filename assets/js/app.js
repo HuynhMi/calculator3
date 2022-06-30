@@ -21,7 +21,8 @@ const appCalculator = {
     tempResult: '',
     expression: '',
     hasDot: false,
-    enableDigitInput: true,
+    enableDigit: true,
+    hasZero: false,
     lastOperator: null,
     isEqual: false,
     handleEvents: function() {
@@ -41,18 +42,23 @@ const appCalculator = {
                     2. chỉ cho nhập 1 dot
                 */
                 const value = e.target.innerText;
-                if (value === '0' && !_this.operand) {
-                    _this.hasDot = false;
-                    _this.enableDigitInput = false;
-                } else if (value === '0' && !_this.enableDigitInput ) {
+                if (value === '0' && !_this.operand && !_this.hasZero) {
+                    _this.hasZero = true;
+                    // _this.hasDot = false;
+                } else if(value === '0' && _this.hasZero){
                     return;
                 }
 
-                if(value === '.' && _this.operand && !_this.hasDot) {
-                    _this.hasDot = true;
-                    _this.enableDigitInput = true;
-                } else if ((value === '.' && !_this.operand) || (value === '.' && _this.hasDot)) {
+                if ((value === '.' && _this.hasDot) || (value === '.' && !_this.operand)) {
                     return;
+                } else if (value === '.' && !_this.hasDot) {
+                    _this.hasDot = true;
+                    _this.hasZero = false;
+                } 
+
+                if (value != '0' && _this.operand === '0' && value != '.') {
+                    _this.operand = '';
+                    _this.hasZero = false;
                 }
 
                 if (_this.isEqual) {
@@ -143,6 +149,8 @@ const appCalculator = {
             this.operand += txt;
         } else {
             this.operand = '';
+            this.hasDot = false;
+            this.hasZero = false;
         }
         operandElement.innerText = this.operand;
         if (this.operand) {
@@ -189,7 +197,7 @@ const appCalculator = {
                     this.tempResult = parseFloat(this.tempResult) / parseFloat(this.operand);
                     break;
             }
-            this.tempResult = parseFloat(this.tempResult.toPrecision(16)).toString();
+            this.tempResult = parseFloat(this.tempResult.toPrecision(15)).toString();
         }
         
     },
