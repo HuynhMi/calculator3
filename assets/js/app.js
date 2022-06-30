@@ -229,7 +229,7 @@ const appCalculator = {
                     this.tempResult = parseFloat(this.tempResult) / parseFloat(this.operand);
                     break;
             }
-            this.tempResult = parseFloat(this.tempResult.toPrecision(15)).toString();
+            this.tempResult = parseFloat(this.tempResult.toPrecision(12)).toString();
         }
         
     },
